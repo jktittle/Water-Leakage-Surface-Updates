@@ -26,6 +26,7 @@ pressureUpdateFile = "C:\\StaticPressureProcess\\TasksExport.csv"
 pressurePoint = "C:\\StaticPressureProcess\\StaticPressureData.gdb\\PZ1838A_PressureTestPnts"
 pressureZone = "C:\\StaticPressureProcess\\StaticPressureData.gdb\\PZ1838A_Redefined"
 outRaster = "C:\\StaticPressureProcess\\StaticPressureData.gdb\\LeakSurface_" + datetime.date.today().strftime("%m%d%Y")
+clippedRaster = "C:\\StaticPressureProcess\\StaticPressureData.gdb\\ClippedSurface_" + datetime.date.today().strftime("%m%d%Y")
 geoStatModel = "C:\\StaticPressureProcess\\OrdinaryKrigingModel_1838A_TheBest.xml"
 geoStatLayer = "KrigingOutLayer"
 
@@ -139,8 +140,11 @@ krigingInLayer = "C:\\StaticPressureProcess\\UpdatedStaticPressureTests_07192019
 #arcpy.GACreateGeostatisticalLayer_ga(in_ga_model_source, in_datasets, out_layer)
 arcpy.GACreateGeostatisticalLayer_ga(geoStatModel, krigingInLayer, geoStatLayer)
 
-#Create the pressure surface based on pressurePoints
-arcpy.Kriging_3d(shpFileName, "HydroGrade", outRaster)
+#Export Geostatistical layer to a raster
+arcpy.GALayerToRasters_ga(geoStatLayer, outRaster)
+
+#Clip the interpolation surface to the desired polygon boundary layer
+arcpy.Clip_management(outRaster, clippedRaster, pressureZone, "ClippingGeometry")
 
 #Clip the interpolation surface to the desired polygon boundary layer
 arcpy.Clip_analysis(outRaster, pressureZone)
