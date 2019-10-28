@@ -6,9 +6,6 @@
 
 The static pressure update processing is an ongoing program at the water department, so an automated script was developed to capture additional hydrant pressure tests daily. This placed information indicating large areas exhibiting water leakage in front of decision-makers in a timely manner so that large water breaks can be identified and repaired. The script was written in Python and developed using Jupyter Notebooks in conjunction with ArcGIS to document each step and support replication in other water systems. 
 
-### Prerequisites
-
-What things you need to install the software and how to install them
 
 
 ## Authors
