@@ -143,7 +143,7 @@ arcpy.GACreateGeostatisticalLayer_ga(geoStatModel, krigingInLayer, geoStatLayer)
 #Export Geostatistical layer to a raster
 arcpy.GALayerToRasters_ga(geoStatLayer, outRaster)
 
-#Clip the interpolation surface to the desired polygon boundary layer
+#Clip the interpolation surface to the desired DMA or pressure zone polygon boundary layer
 arcpy.Clip_management(outRaster, clippedRaster, pressureZone, "ClippingGeometry")
 
 #Clip the interpolation surface to the desired polygon boundary layer
