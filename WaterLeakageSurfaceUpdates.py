@@ -27,6 +27,7 @@ pressurePoint = "C:\\StaticPressureProcess\\StaticPressureData.gdb\\PZ1838A_Pres
 pressureZone = "C:\\StaticPressureProcess\\StaticPressureData.gdb\\PZ1838A_Redefined"
 outRaster = "C:\\StaticPressureProcess\\StaticPressureData.gdb\\LeakSurface_" + datetime.date.today().strftime("%m%d%Y")
 clippedRaster = "C:\\StaticPressureProcess\\StaticPressureData.gdb\\ClippedSurface_" + datetime.date.today().strftime("%m%d%Y")
+redefined1838aDma = "C:\\StaticPressureProcess\\DMA1838A.shp"
 geoStatModel = "C:\\StaticPressureProcess\\OrdinaryKrigingModel_1838A_TheBest.xml"
 geoStatLayer = "KrigingOutLayer"
 
@@ -135,7 +136,7 @@ arcpy.CheckOutExtension("Spatial")
 arcpy.CheckOutExtension("GeoStats")
 
 # **Run the Kriging interpolation using the pressure point layer.  This step creates a Geostatistical Layer using tools from Geostatistical Analyst.  The tool uses an existing Geostatistial layer as a model source to duplicate its parameters and should be stored in the project workspace.**
-krigingInLayer = "C:\\StaticPressureProcess\\UpdatedStaticPressureTests_07192019.shp X=Shape Y=Shape F1=HydroGrade"
+krigingInLayer = shpFileName + " X=Shape Y=Shape F1=HydroGrade"
 
 #arcpy.GACreateGeostatisticalLayer_ga(in_ga_model_source, in_datasets, out_layer)
 arcpy.GACreateGeostatisticalLayer_ga(geoStatModel, krigingInLayer, geoStatLayer)
@@ -144,7 +145,7 @@ arcpy.GACreateGeostatisticalLayer_ga(geoStatModel, krigingInLayer, geoStatLayer)
 arcpy.GALayerToRasters_ga(geoStatLayer, outRaster)
 
 #Clip the interpolation surface to the desired DMA or pressure zone polygon boundary layer
-arcpy.Clip_management(outRaster, clippedRaster, pressureZone, "ClippingGeometry")
+arcpy.Clip_management(outRaster, "#",clippedRaster, redefined1838aDma,"0","ClippingGeometry")
 
 #Clip the interpolation surface to the desired polygon boundary layer
 arcpy.Clip_analysis(outRaster, pressureZone)
