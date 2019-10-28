@@ -147,9 +147,6 @@ arcpy.GALayerToRasters_ga(geoStatLayer, outRaster)
 #Clip the interpolation surface to the desired DMA or pressure zone polygon boundary layer
 arcpy.Clip_management(outRaster, "#",clippedRaster, redefined1838aDma,"0","ClippingGeometry")
 
-#Clip the interpolation surface to the desired polygon boundary layer
-arcpy.Clip_analysis(outRaster, pressureZone)
-
 #Check back in the ESRI Spatial and Geostatistical Analyst Extensions
 arcpy.CheckInExtension("Spatial")
 arcpy.CheckInExtension("GeoStats")
